@@ -3,141 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sketch Graphic - עיצוב מתנה אישית</title>
+    <title>Sketch Graphic | יצירת מתנה אישית</title>
     <style>
+        /* עיצוב כללי - בהשראת matnati4u */
         :root {
-            --primary-color: #333;
-            --accent-color: #ff5a5f;
-            --bg-color: #f9f9f9;
+            --primary-dark: #222;
+            --accent-red: #e63946;
+            --soft-gray: #f4f4f9;
+            --border-color: #ddd;
+            --wood-frame: #8d6e63; /* צבע מסגרת עץ */
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Assistant', 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--soft-gray);
+            margin: 0;
+            padding: 0;
+            color: var(--primary-dark);
+        }
+
+        header {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--primary-dark);
+        }
+
+        .logo span { color: var(--accent-red); }
+
+        /* אזור התוכן המרכזי */
+        .product-page {
+            max-width: 1100px;
+            margin: 40px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        /* צד שמאל - המוקאפ של המוצר */
+        .visual-side {
+            flex: 1;
+            min-width: 320px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
-            margin: 0;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        .container {
-            max-width: 800px;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        h1 { color: var(--primary-color); }
-
-        /* אזור הפריוויו - המוקאפ */
         .mockup-container {
             position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 20px auto;
-            border: 10px solid #d2b48c; /* צבע דמוי עץ לבלוק */
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1/1;
             background: #eee;
-            overflow: hidden;
+            border: 12px solid var(--wood-frame); /* המדמיה של הבלוק עץ */
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.15);
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         #preview-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none; /* מוסתר עד שמעלים תמונה */
-        }
-
-        .placeholder-text {
-            color: #888;
-            font-size: 0.9em;
-        }
-
-        /* כפתור העלאה מעוצב */
-        .upload-section {
-            margin-top: 20px;
-        }
-
-        input[type="file"] {
             display: none;
         }
 
-        .custom-file-upload {
-            display: inline-block;
-            padding: 12px 24px;
-            cursor: pointer;
-            background-color: var(--accent-color);
-            color: white;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: transform 0.2s;
+        .placeholder-text {
+            color: #999;
+            text-align: center;
+            font-weight: 500;
         }
 
-        .custom-file-upload:hover {
-            transform: scale(1.05);
+        /* צד ימין - אפשרויות קניה */
+        .options-side {
+            flex: 1;
+            min-width: 320px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        h1 { margin-top: 0; font-size: 28px; }
+        .price { font-size: 24px; color: var(--accent-red); font-weight: bold; margin-bottom: 20px; }
+
+        .form-group { margin-bottom: 25px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; }
+
+        /* עיצוב כפתור העלאה */
+        .upload-wrapper {
+            position: relative;
+            border: 2px dashed var(--border-color);
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .upload-wrapper:hover { border-color: var(--accent-red); background: #fffcfc; }
+
+        .upload-wrapper input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
         }
 
         .btn-order {
-            margin-top: 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1em;
-            border-radius: 5px;
-            cursor: pointer;
             width: 100%;
+            padding: 15px;
+            background: var(--primary-dark);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-order:hover { background: #000; transform: translateY(-2px); }
+
+        /* רספונסיביות לנייד */
+        @media (max-width: 768px) {
+            .product-page { flex-direction: column; }
+            .visual-side { order: 2; }
+            .options-side { order: 1; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Sketch Graphic</h1>
-        <p>העלה תמונה וראה איך המתנה שלך תיראה:</p>
+<header>
+    <div class="logo">SKETCH <span>GRAPHIC</span></div>
+</header>
 
-        <div class="mockup-container" id="mockup">
-            <span class="placeholder-text" id="placeholder">כאן תופיע התמונה שלך</span>
-            <img id="preview-img" src="#" alt="תצוגה מקדימה">
+<main class="product-page">
+    
+    <div class="visual-side">
+        <div class="mockup-container" id="block-mockup">
+            <div class="placeholder-text" id="empty-msg">
+                <p>📸</p>
+                <p>העלו תמונה כדי לראות<br>הדמיה על בלוק העץ</p>
+            </div>
+            <img id="preview-img" src="" alt="תצוגה מקדימה">
         </div>
-
-        <div class="upload-section">
-            <label for="file-upload" class="custom-file-upload">
-                📸 בחר תמונה מהגלריה
-            </label>
-            <input id="file-upload" type="file" accept="image/*">
-        </div>
-
-        <button class="btn-order">הוספה לסל הקניות</button>
+        <p style="margin-top: 15px; font-size: 14px; color: #777;">* התמונה להמחשה בלבד</p>
     </div>
 
-    <script>
-        const fileInput = document.getElementById('file-upload');
-        const previewImg = document.getElementById('preview-img');
-        const placeholder = document.getElementById('placeholder');
+    <div class="options-side">
+        <h1>בלוק עץ טבעי - ריבוע פרימיום</h1>
+        <div class="price">99.00 ₪</div>
+        
+        <div class="form-group">
+            <label>1. העלאת תמונה אישית:</label>
+            <div class="upload-wrapper" id="drop-zone">
+                <span id="upload-text">לחצו כאן או גררו תמונה</span>
+                <input type="file" id="image-input" accept="image/*">
+            </div>
+        </div>
 
-        fileInput.addEventListener('change', function() {
-            const file = this.files[0];
-            
-            if (file) {
-                const reader = new FileReader();
+        <div class="form-group">
+            <label>2. הערות ובקשות מיוחדות:</label>
+            <textarea id="notes" rows="3" style="width:100%; border:1px solid #ddd; border-radius:5px; padding:10px; box-sizing:border-box;" placeholder="למשל: בבקשה להבהיר מעט את התמונה..."></textarea>
+        </div>
 
-                reader.onload = function(e) {
-                    previewImg.src = e.target.result;
-                    previewImg.style.display = 'block';
-                    placeholder.style.display = 'none';
-                }
+        <button class="btn-order" id="submit-btn">הוספה לסל הקניות</button>
+        
+        <div style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; font-size: 14px; color: #555;">
+            ✅ הדפסה איכותית (סובלימציה)<br>
+            ✅ עמיד בפני שריטות ולחות<br>
+            ✅ משלוח מהיר עד הבית
+        </div>
+    </div>
 
-                reader.readAsDataURL(file);
+</main>
+
+<script>
+    const imageInput = document.getElementById('image-input');
+    const previewImg = document.getElementById('preview-img');
+    const emptyMsg = document.getElementById('empty-msg');
+    const uploadText = document.getElementById('upload-text');
+
+    // פונקציה לעדכון הפריוויו ברגע שנבחר קובץ
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+
+            // ברגע שהקובץ נקרא
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                previewImg.style.display = 'block';
+                emptyMsg.style.display = 'none';
+                uploadText.innerHTML = "✅ תמונה נבחרה: " + file.name;
+                uploadText.style.color = "#27ae60";
             }
-        });
-    </script>
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // כפתור הזמנה (כרגע רק התראה)
+    document.getElementById('submit-btn').addEventListener('click', function() {
+        if (!imageInput.files[0]) {
+            alert("אנא העלה תמונה לפני הוספה לסל");
+        } else {
+            alert("המוצר התווסף לסל! (כאן יחובר מערך המכירה שלך)");
+        }
+    });
+</script>
 
 </body>
 </html>
